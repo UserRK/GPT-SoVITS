@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(conda --version)",
+      "Bash(pip show *)",
+      "Bash(conda env *)",
+      "Bash(nvidia-smi)",
+      "Read(//proc/driver/nvidia/**)",
+      "Bash(/home/ubunturk/miniconda3/bin/conda create *)",
+      "Bash(/home/ubunturk/miniconda3/bin/conda env *)",
+      "Bash(/home/ubunturk/miniconda3/bin/conda tos *)",
+      "Bash(sed -n '555,575p' /home/ubunturk/dev/GPT-SoVITS/api.py)",
+      "Bash(sed -n '1155,1185p' /home/ubunturk/dev/GPT-SoVITS/api.py)",
+      "Bash(grep -A 5 \"unhashable\\\\|TypeError\" /tmp/webui_stderr.log | head -30)",
+      "Read(//tmp/**)",
+      "Bash(grep -v \"^--$\")",
+      "Bash(echo '')",
+      "Bash(echo '# GPT-SoVITS launcher')",
+      "Bash(echo 'alias gptsound=\"source /home/ubunturk/miniconda3/etc/profile.d/conda.sh && conda activate GPTSoVits && python webui.py\"')",
+      "Bash(# Remove the incomplete alias we just added *)",
+      "Bash(chmod +x /home/ubunturk/bin/gptsound)",
+      "Bash(echo 'export PATH=\"$HOME/bin:$PATH\"')",
+      "Bash(chmod +x ~/.local/bin/gptsound)",
+      "Bash(fuser -k 9872/tcp)",
+      "Bash(fuser -k 9874/tcp)",
+      "Bash(fuser -k 9873/tcp)"
+    ],
+    "additionalDirectories": [
+      "/home/ubunturk"
+    ]
+  }
+}
