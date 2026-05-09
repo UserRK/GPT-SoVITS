@@ -564,6 +564,9 @@ def get_phones_and_bert(text, language, version, final=False):
         for tmp in LangSegmenter.getTexts(text,"ko"):
             langlist.append(tmp["lang"])
             textlist.append(tmp["text"])
+    elif language == "all_uk":
+        langlist.append("uk")
+        textlist.append(text)
     elif language == "en":
         langlist.append("en")
         textlist.append(text)
@@ -1161,6 +1164,7 @@ dict_language = {
     "英文": "en",
     "日文": "all_ja",
     "韩文": "all_ko",
+    "Українська": "all_uk",
     "中英混合": "zh",
     "粤英混合": "yue",
     "日英混合": "ja",
@@ -1172,10 +1176,12 @@ dict_language = {
     "en": "en",
     "all_ja": "all_ja",
     "all_ko": "all_ko",
+    "all_uk": "all_uk",
     "zh": "zh",
     "yue": "yue",
     "ja": "ja",
     "ko": "ko",
+    "uk": "uk",
     "auto": "auto",
     "auto_yue": "auto_yue",
 }

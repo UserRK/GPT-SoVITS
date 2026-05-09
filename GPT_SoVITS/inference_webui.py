@@ -183,12 +183,18 @@ dict_language_v2 = {
     i18n("日文"): "all_ja",  # 全部按日文识别
     i18n("粤语"): "all_yue",  # 全部按中文识别
     i18n("韩文"): "all_ko",  # 全部按韩文识别
+    i18n("Українська"): "all_uk",  # Ukrainian
     i18n("中英混合"): "zh",  # 按中英混合识别####不变
     i18n("日英混合"): "ja",  # 按日英混合识别####不变
     i18n("粤英混合"): "yue",  # 按粤英混合识别####不变
     i18n("韩英混合"): "ko",  # 按韩英混合识别####不变
     i18n("多语种混合"): "auto",  # 多语种启动切分识别语种
     i18n("多语种混合(粤语)"): "auto_yue",  # 多语种启动切分识别语种
+    # direct code passthrough (for API / programmatic use)
+    "all_zh": "all_zh", "all_ja": "all_ja", "all_yue": "all_yue",
+    "all_ko": "all_ko", "all_uk": "all_uk",
+    "zh": "zh", "ja": "ja", "yue": "yue", "ko": "ko", "uk": "uk",
+    "en": "en", "auto": "auto", "auto_yue": "auto_yue",
 }
 dict_language = dict_language_v1 if version == "v1" else dict_language_v2
 
@@ -659,6 +665,9 @@ def get_phones_and_bert(text, language, version, final=False):
         for tmp in LangSegmenter.getTexts(text,"ko"):
             langlist.append(tmp["lang"])
             textlist.append(tmp["text"])
+    elif language == "all_uk":
+        langlist.append("uk")
+        textlist.append(text)
     elif language == "en":
         langlist.append("en")
         textlist.append(text)
@@ -851,7 +860,7 @@ def get_tts_wav(
     if not ref_free:
         with torch.no_grad():
             wav16k, sr = librosa.load(ref_wav_path, sr=16000)
-            if wav16k.shape[0] > 160000 or wav16k.shape[0] < 48000:
+            if wav16k.shape[0] > 480000 or wav16k.shape[0] < 48000:
                 gr.Warning(i18n("参考音频在3~10秒范围外，请更换！"))
                 raise OSError(i18n("参考音频在3~10秒范围外，请更换！"))
             wav16k = torch.from_numpy(wav16k)
@@ -1074,6 +1083,8 @@ def get_tts_wav(
 
 def split(todo_text):
     todo_text = todo_text.replace("……", "。").replace("——", "，")
+    if not todo_text:
+        return []
     if todo_text[-1] not in splits:
         todo_text += "。"
     i_split_head = i_split_tail = 0
@@ -1426,7 +1437,7 @@ with gr.Blocks(title="GPT-SoVITS WebUI", analytics_enabled=False, js=js, css=css
 if __name__ == "__main__":
     app.queue().launch(  # concurrency_count=511, max_size=1022
         server_name="0.0.0.0",
-        inbrowser=True,
+        inbrowser=False,
         share=is_share,
         server_port=infer_ttswebui,
         # quiet=True,

@@ -142,6 +142,9 @@ class TextPreprocessor:
                 for tmp in LangSegmenter.getTexts(text,"ko"):
                     langlist.append(tmp["lang"])
                     textlist.append(tmp["text"])
+            elif language == "all_uk":
+                langlist.append("uk")
+                textlist.append(text)
             elif language == "en":
                 langlist.append("en")
                 textlist.append(text)
